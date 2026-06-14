@@ -124,6 +124,63 @@ python -m backend.collect --person efe --count 30 --shuffle
 
 ---
 
+## 🖥️ Server & Modell — im Detail
+
+### Server starten
+```powershell
+python -m backend.server
+```
+Erfolg sieht so aus:
+```
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+```
+- Lauscht auf `0.0.0.0:8000` → im ganzen WLAN erreichbar (Konstanten in
+  `backend/config.py`: `HOST`, `PORT`).
+- **Live-Anzeige im Browser:** <http://localhost:8000> (auf dem Server-Rechner)
+  bzw. `http://<laptop-ip>:8000` von anderen Geräten.
+- Endpunkte: `WS /ws/watch` (Sensordaten von der App),
+  `WS /ws/display` (erkannte Ziffern an den Browser).
+
+### Windows-Firewall freigeben
+Beim ersten Start fragt Windows „Zugriff zulassen?" → **Privat** anhaken +
+zulassen. Falls verpasst, in PowerShell **als Administrator**:
+```powershell
+netsh advfirewall firewall add rule name="AirWriting 8000" dir=in action=allow protocol=TCP localport=8000
+```
+
+### Wo wird das Training gespeichert?
+`python -m backend.train` schreibt am Ende **automatisch** zwei Dateien:
+
+| Datei | Inhalt |
+|---|---|
+| `backend/models/model.pt` | trainierte 1D-CNN-Gewichte |
+| `backend/models/norm_stats.npz` | Normalisierungs-Statistiken (mean/std) |
+
+Beim nächsten Start von `backend.server` werden **beide automatisch geladen** →
+ab dann Live-Erkennung. Fehlen sie, läuft der Server im Sammel-/Debug-Modus
+(nur Segmente, keine Ziffern). Die Pfade stehen in `backend/config.py`
+(`MODEL_PATH`, `NORM_STATS_PATH`).
+
+### Trainings-Optionen
+```powershell
+python -m backend.train                          # Standard: 80 Epochen, Early Stopping, Augmentation x5
+python -m backend.train --epochs 60 --augment-factor 6
+```
+- Bei **einer Person** nutzt das Training automatisch einen zufälligen 80/20-Split
+  (Meldung „Nur eine Person → zufälliger Split"). Mehrere Personen → Cross-Person-
+  Hold-out (`--test-person <name>`).
+- Ausgabe: pro Epoche `train_loss / val_loss / val_acc`, am Ende
+  **Test-Accuracy + Confusion-Matrix** (Zeile = wahr, Spalte = vorhergesagt).
+
+### Wichtig zum Datensammeln
+- Gesammelte Segmente **sammeln sich an**: `collect` kann mehrmals (auch an
+  verschiedenen Tagen) laufen — neue Aufnahmen werden **ergänzt**, nicht
+  überschrieben (Dateiname `{person}_{label}_{laufnummer}.npz`).
+- Ablauf-Schleife: **collect → train → server**. Nach erneutem Sammeln:
+  **neu trainieren**, dann Server neu starten, damit das aktualisierte Modell geladen wird.
+
+---
+
 ## 📦 Datenformat
 
 **Sensor-Sample (App → Server, JSON pro Nachricht):**
