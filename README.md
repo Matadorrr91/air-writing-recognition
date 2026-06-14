@@ -72,8 +72,8 @@ auf einem Mac neu installiert werden.
 Das **gesamte Daten-Sammeln und Training läuft auf dem Laptop** — kein Mac nötig.
 
 ```powershell
-git clone https://github.com/<DEIN-USER>/<DIESES-REPO>.git
-cd <DIESES-REPO>
+git clone https://github.com/Matadorrr91/air-writing-recognition.git
+cd air-writing-recognition
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
