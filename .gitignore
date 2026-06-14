@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Gesammelte Daten & trainierte Modelle (gross / personen-/laufabhaengig)
+backend/dataset/*
+!backend/dataset/.gitkeep
+backend/models/*
+!backend/models/.gitkeep
+
+# Betriebssystem / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# macOS / Xcode (app/, nur auf dem Mac relevant)
+*.xcuserstate
+xcuserdata/
+build/
+DerivedData/
+*.xcframework

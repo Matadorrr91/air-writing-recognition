@@ -1,0 +1,9 @@
+# Python 3.11+ (getestet mit 3.13). Installation:
+#   python -m venv .venv && .venv\Scripts\Activate.ps1 && pip install -r requirements.txt
+fastapi>=0.115
+uvicorn[standard]>=0.34
+websockets>=14
+numpy>=2.1
+torch>=2.6          # >=2.6 liefert Wheels fuer Python 3.13
+scikit-learn>=1.5
+httpx>=0.27         # noetig fuer fastapi.testclient (tests/smoke_e2e.py)
