@@ -1,20 +1,8 @@
-# App — Build-Anleitung (nur auf einem Mac mit Xcode)
+# iOS-App — Build-Anleitung (nur auf einem Mac mit Xcode)
 
-Dieses Xcode-Projekt enthält **zwei Targets**:
-
-| Target | Ordner | Status |
-|---|---|---|
-| **AirWritingPhone** | [`AirWritingPhone/`](AirWritingPhone/) | ✅ **aktiv** — die genutzte iPhone-App |
-| AirWriting | [`AirWriting/`](AirWriting/) | Apple-Watch-App (Referenz, nicht genutzt) |
-
-> **Warum iPhone statt Watch?** Auf der getesteten Apple Watch Series 4
-> (watchOS 10.5) ließ sich mit einem **kostenlosen** Apple-Entwickler-Account
-> keine eigenständige Watch-App installieren (watchOS verlangte eine
-> Companion-App; mehrere Anläufe scheiterten an Verbindungs-/Installations-
-> grenzen der alten Hardware). Da iPhone und Watch **dieselben Sensoren**
-> (`userAcceleration` + `rotationRate`) liefern und das Backend nur das
-> JSON-Format kennt, wurde auf die **iPhone-App** umgestellt. Backend und
-> Datenformat blieben unverändert.
+Die **iOS-App** liegt im Ordner [`AirWritingPhone/`](AirWritingPhone/) und wird
+über das Xcode-Projekt `AirWriting.xcodeproj` gebaut (Schema/Target
+**AirWritingPhone**).
 
 ## Was die App tut
 Liest die Bewegungssensoren (CoreMotion, 50 Hz) und streamt jedes Sample als

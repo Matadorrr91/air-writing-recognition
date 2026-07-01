@@ -5,24 +5,20 @@ der dieses Projekt auf einem **Windows-Rechner** weiterführt. Lies es zuerst
 vollständig, damit der Nutzer nichts wiederholen muss.
 
 ## Was ist das Projekt?
-Air-Writing: In die Luft geschriebene Ziffern (0–9) werden von einem Gerät mit
-Bewegungssensoren erfasst, per WebSocket an ein Python-Backend gestreamt, dort
-segmentiert und mit einem 1D-CNN klassifiziert. Ergebnis erscheint live im
-Browser. Details: siehe `README.md`.
+Air-Writing: In die Luft geschriebene Ziffern (0–9) werden von einer **nativen
+iOS-App** (iPhone, SwiftUI + CoreMotion) erfasst, per WebSocket an ein
+Python-Backend gestreamt, dort segmentiert und mit einem 1D-CNN klassifiziert.
+Ergebnis erscheint live im Browser. Details: siehe `README.md`.
 
 ## Aktueller Stand (Übergabe vom Mac)
 - ✅ **Backend, Frontend, Modell-Code, Tests** sind vollständig und lauffähig.
 - ✅ Die **iPhone-App** (`app/AirWritingPhone/`) ist gebaut und **auf dem iPhone
   des Nutzers installiert**. Sie streamt iPhone-CoreMotion-Daten (50 Hz) als JSON
   an `ws://<server-ip>:8000/ws/watch`.
-- ✅ **Verbindung iPhone → Backend → Browser wurde am Mac erfolgreich getestet**:
+- ✅ **Verbindung iPhone → Backend → Browser wurde erfolgreich getestet**:
   Segmente (blaue Kreise) erscheinen live.
-- ⛔ **Es ist noch KEIN Modell trainiert** → der Server läuft im Sammel-/Debug-
-  Modus, es werden noch keine Ziffern erkannt. Es wurden nur ~8 Testsegmente
-  gesammelt (zu wenig); diese liegen NICHT im Repo.
-- ℹ️ Eine Apple-Watch-Variante (`app/AirWriting/`) wurde verworfen (ließ sich auf
-  einer Series 4 / watchOS 10.5 mit Gratis-Account nicht installieren). Der
-  iPhone-Weg ist der aktive.
+- ℹ️ Die Erfassung läuft ausschließlich über die **iOS-App**
+  (`app/AirWritingPhone/`). Es gibt keine watchOS-Version.
 
 ## Ziel auf dem Windows-Rechner
 Der Nutzer will **Daten sammeln und das Modell trainieren** (kein Mac mehr nötig).

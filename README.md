@@ -7,10 +7,11 @@
 ![Modell](https://img.shields.io/badge/Modell-1D--CNN-blueviolet)
 ![Status](https://img.shields.io/badge/Pipeline-funktioniert-success)
 
-Ziffern **(0–9)** werden mit dem **iPhone** (oder einer Apple Watch) in die Luft
-geschrieben, per WLAN an einen Laptop gestreamt, dort segmentiert und mit einem
-**1D-CNN** erkannt. Die erkannten Ziffern erscheinen **live im Browser** als
-wachsende Zahlenfolge.
+Ziffern **(0–9)** werden mit dem **iPhone** in die Luft geschrieben, per WLAN an
+einen Laptop gestreamt, dort segmentiert und mit einem **1D-CNN** erkannt. Die
+erkannten Ziffern erscheinen **live im Browser** als wachsende Zahlenfolge.
+
+Die Erfassung läuft über eine **native iOS-App** (SwiftUI + CoreMotion).
 
 ```mermaid
 flowchart LR
@@ -46,19 +47,11 @@ Mehrere nacheinander ergeben eine Zahlenfolge: `4` · Pause · `2` → **„42"*
 
 ---
 
-## 📱 Die App (iPhone)
+## 📱 Die iOS-App
 
-Die SwiftUI-App liest die Bewegungssensoren des iPhones aus
+Die native **iOS-App** (SwiftUI) liest die Bewegungssensoren des iPhones aus
 (`userAcceleration` + `rotationRate`) und streamt jedes Sample als JSON per
 WebSocket an das Backend. Code: [`app/AirWritingPhone/`](app/AirWritingPhone/).
-
-> **Hinweis zur Plattform:** Ursprünglich war eine **Apple-Watch-App** geplant
-> (Code liegt in [`app/AirWriting/`](app/AirWriting/)). Auf der getesteten
-> **Apple Watch Series 4 (watchOS 10.5)** ließ sich eine eigenständige Watch-App
-> mit einem kostenlosen Entwickler-Account jedoch nicht installieren. Deshalb
-> läuft die App jetzt auf dem **iPhone** — die Sensoren und das Datenformat sind
-> identisch, das Backend bleibt unverändert. Der Watch-Code ist für die
-> Dokumentation enthalten.
 
 **Bauen/Installieren** (einmalig, nur auf einem **Mac mit Xcode** möglich):
 Siehe [`app/README.md`](app/README.md). Auf dem iPhone ist die App bereits
@@ -221,9 +214,8 @@ python -m backend.train --epochs 60 --augment-factor 6
 ├─ frontend/
 │  ├─ index.html          # Live-Anzeige (dark, kein Framework)
 │  └─ app.js              # WebSocket-Client mit Auto-Reconnect
-├─ app/                   # Xcode-Projekt (auf dem Mac gebaut)
-│  ├─ AirWritingPhone/    # ✅ iPhone-App (aktiv genutzt)
-│  ├─ AirWriting/         # Apple-Watch-App (Referenz, siehe Hinweis oben)
+├─ app/                   # Xcode-Projekt der iOS-App (auf dem Mac gebaut)
+│  ├─ AirWritingPhone/    # iOS-App (SwiftUI + CoreMotion)
 │  └─ AirWriting.xcodeproj
 └─ tests/
    ├─ test_pipeline.py    # Kernlogik ohne Hardware
